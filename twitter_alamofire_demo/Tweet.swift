@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import DateToolsSwift
 class Tweet {
     
     // MARK: Properties
@@ -29,21 +29,23 @@ class Tweet {
         favorited = dictionary["favorited"] as? Bool
         retweetCount = dictionary["retweet_count"] as! Int
         retweeted = dictionary["retweeted"] as! Bool
-        imageURL = dictionary["profile_image_url"] as! String
         let user = dictionary["user"] as! [String: Any]
         self.user = User(dictionary: user)
         
+        imageURL = user["profile_image_url"] as! String
         let createdAtOriginalString = dictionary["created_at"] as! String
         let formatter = DateFormatter()
         // Configure the input format to parse the date string
         formatter.dateFormat = "E MMM d HH:mm:ss Z y"
         // Convert String to Date
         let date = formatter.date(from: createdAtOriginalString)!
+        let dat = 2.seconds.earlier(than: date)
+
         // Configure output format
         formatter.dateStyle = .short
         formatter.timeStyle = .none
         // Convert Date to String
-        createdAtString = formatter.string(from: date)
+        createdAtString = String(describing: dat.shortTimeAgoSinceNow)
         
         
     }
