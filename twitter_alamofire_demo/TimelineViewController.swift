@@ -82,6 +82,17 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         APIManager.shared.logout()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "tweetDetail"){
+            let cell = sender as! UITableViewCell
+            if let indexPath = tableView.indexPath(for: cell){
+                let tweetDetail = segue.destination as! DetailViewController
+                tweetDetail.tweet = tweets[indexPath.row]
+            }
+        }
+        if (segue.identifier == "composeTweet"){
+        }
+    }
     
     /*
      // MARK: - Navigation
